@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-to-Image Generator</title>
+</head>
+<body>
+    <h1>Text-to-Image Generator</h1>
+
+    <div>
+        <label for="prompt">Enter Text Prompt:</label>
+        <input type="text" id="prompt" placeholder="Self-portrait oil painting, a beautiful cyborg with golden hair, 8k">
+        <button onclick="generateImage()">Generate Image</button>
+    </div>
+
+    <div id="result">
+        <!-- The generated image will be displayed here -->
+    <img id="generatedImage" src="" alt="Generated Image">
+    </div>
+    
+<script>
+        function generateImage() {
+            // Get the prompt value from the input field
+            var promptValue = document.getElementById('prompt').value;
+
+            // Make an AJAX request to the Flask service
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/generate_image', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Parse the response JSON
+                    var response = JSON.parse(xhr.responseText);
+
+                    // Display the generated image
+                    var generatedImage = document.getElementById('generatedImage');
+                generatedImage.src = '/public/generated_images/' + response.image;
+                }
+            };
+
+            // Send the request with the prompt in the request body
+            xhr.send(JSON.stringify({ 'prompt': promptValue }));
+        }
+    </script>
+</body>
+</html>
