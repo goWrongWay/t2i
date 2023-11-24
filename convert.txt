@@ -1,0 +1,3 @@
+from diffusers import StableDiffusionXLPipeline
+ pipe = StableDiffusionXLPipeline.from_single_file("nightvision.safetensors")
+ pipe.save_pretrained("nightXL")

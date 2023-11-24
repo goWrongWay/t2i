@@ -45,9 +45,11 @@ if mps_available:
 # pipe.unet.to(memory_format=torch.channels_last)
 
 # Load models and initialize pipeline
-model_id = "stabilityai/stable-diffusion-xl-base-1.0"
+# model_id = "stabilityai/stable-diffusion-xl-base-1.0"
+model_id = "D:\AIGC\/nightXL"
 adapter_id = "latent-consistency/lcm-lora-sdxl"
 
+# pipe = DiffusionPipeline.from_pretrained(model_id,local_files_only=True,torch_dtype=torch.float16,use_safetensors=True)
 pipe = AutoPipelineForText2Image.from_pretrained(model_id, torch_dtype=torch.float16, variant="fp16")
 pipe.scheduler = LCMScheduler.from_config(pipe.scheduler.config)
 pipe.to("cuda")
