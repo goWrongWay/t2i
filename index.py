@@ -28,6 +28,7 @@ def serve_generated_image(filename):
 def generate_image():
     try:
         # Get the input prompt from the request
+        start_time = time.time()
         data = request.get_json() 
         prompt = data.get('prompt', '')
          # Generate a random filename
@@ -38,9 +39,9 @@ def generate_image():
 
         # Save the image with the random filename
         image_path = os.path.join('public/generated_images', filename)
-        image = pipe(prompt=prompt, num_inference_steps=4, guidance_scale=1.2).images[0]
+        image = pipe(prompt=prompt, num_inference_steps=4, guidance_scale=1.2,num_images_per_prompt=2,).images[0]
         image.save(image_path)
-
+        print(time.time() - start_time)
         return jsonify({'success': True, 'image': filename,})
 
     except Exception as e:
