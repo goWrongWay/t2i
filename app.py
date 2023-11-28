@@ -73,7 +73,7 @@ pipe.fuse_lora()
 style_list = [
     {
         "name": "(No style)",
-        "prompt": "{prompt}",
+        "prompt": "{prompt},,ray tracing",
         "negative_prompt": "worst quality, normal quality, low quality, low res",
     },
     {
